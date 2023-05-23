@@ -1,36 +1,126 @@
-from django.shortcuts import render
 from rest_framework import generics
-from django.contrib.auth.models import User
-from .models import *
-from .serializers import *
-from rest_framework.response import Response
-from rest_framework import status
+from .models import Skill, SkillListing, ForumComment, UserProgress, Message, Notification, MeetingProposal, SkillListing, Message, ForumTopic, ForumComment
+from .serializers import SkillSerializer, SkillListingSerializer, MessageSerializer, MeetingProposalSerializer, ForumTopicSerializer, ForumCommentSerializer, NotificationSerializer, UserProgressSerializer
+from rest_framework.permissions import IsAuthenticated
 
-
-class UserListCreateView(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class SkillListCreateView(generics.ListCreateAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticated]
 
-class ProfileListCreateView(generics.ListCreateAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
 
-    def create(self, request, *args, **kwargs):
-        user = self.request.user
-        profile_data = request.data.copy()
-        profile_data['user'] = user.id
-        serializer = self.get_serializer(data=profile_data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+class SkillRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticated]
+
 
 class SkillListingListCreateView(generics.ListCreateAPIView):
     queryset = SkillListing.objects.all()
     serializer_class = SkillListingSerializer
+    permission_classes = [IsAuthenticated]
 
 
+class SkillListingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SkillListing.objects.all()
+    serializer_class = SkillListingSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ForumTopicListCreateView(generics.ListCreateAPIView):
+    queryset = ForumTopic.objects.all()
+    serializer_class = ForumTopicSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ForumTopicRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ForumTopic.objects.all()
+    serializer_class = ForumTopicSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ForumCommentListCreateView(generics.ListCreateAPIView):
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumCommentSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ForumCommentRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumCommentSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class UserProgressListCreateView(generics.ListCreateAPIView):
+    queryset = UserProgress.objects.all()
+    serializer_class = UserProgressSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class UserProgressRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserProgress.objects.all()
+    serializer_class = UserProgressSerializer
+    permission_classes = [IsAuthenticated]
+
+class SkillsListCreateAPIView(generics.ListCreateAPIView):
+    queryset = SkillListing.objects.all()
+    serializer_class = SkillListingSerializer
+    permission_classes = [IsAuthenticated]
+
+class SkillListingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SkillListing.objects.all()
+    serializer_class = SkillListingSerializer
+    permission_classes = [IsAuthenticated]
+
+class MessageListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+
+class MessageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+
+class MeetingProposalListCreateAPIView(generics.ListCreateAPIView):
+    queryset = MeetingProposal.objects.all()
+    serializer_class = MeetingProposal
+    permission_classes = [IsAuthenticated]
+
+class MeetingProposalDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MeetingProposal.objects.all()
+    serializer_class = MeetingProposal
+    permission_classes = [IsAuthenticated]
+
+
+class ForumListCreateAPIView(generics.ListCreateAPIView):
+    queryset = ForumTopic.objects.all()
+    serializer_class = ForumTopicSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ForumTopicDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ForumTopic.objects.all()
+    serializer_class = ForumTopicSerializer
+    permission_classes = [IsAuthenticated]
+
+class ForumCommentListCreateAPIView(generics.ListCreateAPIView):
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumCommentSerializer
+    permission_classes = [IsAuthenticated]
+
+class ForumCommentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumCommentSerializer
+    permission_classes = [IsAuthenticated]
+
+class NotificationListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+class NotificationDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
